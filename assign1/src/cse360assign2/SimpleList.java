@@ -35,8 +35,12 @@ public class SimpleList {
 
 	public void add(int number) {
 
+		if (count == list.length) {
+			alloc50();
+		}
+
 		for (int integer = (count - 1); integer >= 0; integer--) {
-			if (integer == 9) {
+			if (integer == list.length - 1) {
 				list[integer] = list[integer];
 			} else {
 				list[integer + 1] = list[integer];
@@ -45,7 +49,7 @@ public class SimpleList {
 
 		list[0] = number;
 
-		if (count < 10) {
+		if (count < list.length) {
 			count++;
 		}
 
@@ -72,7 +76,7 @@ public class SimpleList {
 
 			if (numberFound && integer < count) {
 
-				if (integer == 9) {
+				if (integer == list.length - 1) {
 					list[integer] = list[integer];
 				} else {
 					list[integer] = list[integer + 1];
@@ -85,6 +89,11 @@ public class SimpleList {
 			count--;
 		}
 
+		int half = list.length / 2;
+		int quarter = half / 2;
+		if (count < quarter) {
+			remove25();
+		}
 	}
 
 	/**
@@ -140,7 +149,6 @@ public class SimpleList {
 		for (int integer = 0; integer < count; integer++) {
 
 			if (list[integer] == number) {
-				System.out.println(integer);
 				return integer;
 			}
 
@@ -149,4 +157,71 @@ public class SimpleList {
 		return index;
 	}
 
+	/**
+	 * This method is used to increase the size of the array by 50%.
+	 */
+	private void alloc50() {
+		int halfLength = list.length / 2;
+		int[] tempArray = new int[list.length + halfLength];
+		for (int i = 0; i < list.length; i++) {
+			tempArray[i] = list[i];
+		}
+		list = tempArray;
+	}
+
+	/**
+	 * This method is used to increase the size of the array by 50%.
+	 */
+	private void remove25() {
+		int halfLength = list.length / 2;
+		int quarterLength = halfLength / 2;
+		int[] tempArray = new int[quarterLength];
+		for (int i = 0; i < count; i++) {
+			tempArray[i] = list[i];
+		}
+		list = tempArray;
+	}
+
+	/**
+	 * This method is used to get the first element in the list
+	 * 
+	 * @return first element
+	 */
+	public int first() {
+		if (count == 0) {
+			return -1;
+		}
+		return list[0];
+	}
+
+	/**
+	 * This method is used to get the last element in the list
+	 * 
+	 * @return last element
+	 */
+	public int last() {
+		if (count == 0) {
+			return -1;
+		}
+		return list[count - 1];
+	}
+
+	/**
+	 * This method is used to return the possible locations in the list
+	 * 
+	 * @return size
+	 */
+	public int size() {
+		return list.length;
+	}
+
+	/**
+	 * This method is used to append the element to the end of the list.
+	 * 
+	 * @param element to be appended.
+	 */
+	public void append(int element) {
+		list[count] = element;
+		count++;
+	}
 }
